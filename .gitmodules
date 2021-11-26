@@ -1,0 +1,6 @@
+[submodule "sourcemod"]
+	path = sourcemod
+	url = https://github.com/alliedmodders/sourcemod
+[submodule "hl2sdk-csgo"]
+	path = hl2sdk-csgo
+	url = https://github.com/alliedmodders/hl2sdk.git
