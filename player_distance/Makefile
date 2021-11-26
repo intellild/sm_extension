@@ -174,7 +174,7 @@ endif
 
 # If not clang
 ifeq "$(IS_CLANG)" "0"
-	CFLAGS += -mfpmath=sse
+	CFLAGS += -mfpmath=sse -march=skylake
 endif
 
 # Clang || GCC >= 4

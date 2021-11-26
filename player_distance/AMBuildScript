@@ -207,7 +207,7 @@ class ExtensionConfig(object):
       cxx.cflags += ['-Wno-sometimes-uninitialized']
 
     if have_gcc:
-      cxx.cflags += ['-mfpmath=sse']
+      cxx.cflags += ['-mfpmath=sse', '-march=skylake']
 
     if builder.options.opt == '1':
       cxx.cflags += ['-O3']
