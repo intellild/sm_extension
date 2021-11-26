@@ -1,0 +1,1 @@
+../sourcemod/public/smsdk_ext.cpp
