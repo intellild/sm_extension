@@ -4,3 +4,6 @@
 [submodule "hl2sdk-csgo"]
 	path = hl2sdk-csgo
 	url = https://github.com/alliedmodders/hl2sdk.git
+[submodule "metamod-source"]
+	path = metamod-source
+	url = https://github.com/alliedmodders/metamod-source.git
