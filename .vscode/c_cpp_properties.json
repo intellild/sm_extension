@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/sourcemod/public",
+                "${workspaceFolder}/player_distance",
+                "${workspaceFolder}/player_distance/sdk",
+                "${workspaceFolder}/sourcemod/public",
+                "${workspaceFolder}/sourcemod/public/extensions",
+                "${workspaceFolder}/sourcemod/sourcepawn/include",
+                "${workspaceFolder}/sourcemod/public/amtl/amtl",
+                "${workspaceFolder}/sourcemod/public/amtl",
+                "${workspaceFolder}/metamod-source/core",
+                "${workspaceFolder}/metamod-source/core/sourcehook",
+                "${workspaceFolder}/hl2sdk-csgo/public",
+                "${workspaceFolder}/hl2sdk-csgo/public/engine",
+                "${workspaceFolder}/hl2sdk-csgo/public/mathlib",
+                "${workspaceFolder}/hl2sdk-csgo/public/vstdlib",
+                "${workspaceFolder}/hl2sdk-csgo/public/tier0",
+                "${workspaceFolder}/hl2sdk-csgo/public/tier1",
+                "${workspaceFolder}/hl2sdk-csgo/public/game/server",
+                "${workspaceFolder}/hl2sdk-csgo/public/toolframework",
+                "${workspaceFolder}/hl2sdk-csgo/game/shared",
+                "${workspaceFolder}/hl2sdk-csgo/common"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
