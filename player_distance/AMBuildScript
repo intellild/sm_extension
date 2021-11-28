@@ -169,11 +169,11 @@ class ExtensionConfig(object):
       '-pipe',
       '-fno-strict-aliasing',
       '-Wall',
-      '-Werror',
+      # '-Werror',
       '-Wno-unused',
       '-Wno-switch',
       '-Wno-array-bounds',
-      '-msse',
+      '-march=skylake',
       '-m32',
       '-fvisibility=hidden',
     ]
@@ -207,7 +207,7 @@ class ExtensionConfig(object):
       cxx.cflags += ['-Wno-sometimes-uninitialized']
 
     if have_gcc:
-      cxx.cflags += ['-mfpmath=sse', '-march=skylake']
+      cxx.cflags += ['-march=skylake']
 
     if builder.options.opt == '1':
       cxx.cflags += ['-O3']
