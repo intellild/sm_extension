@@ -38,12 +38,12 @@
  */
 
 /* Basic information exposed publicly */
-#define SMEXT_CONF_NAME			"Sample Extension"
-#define SMEXT_CONF_DESCRIPTION	"Sample extension to help developers"
-#define SMEXT_CONF_VERSION		"0.0.0.0"
-#define SMEXT_CONF_AUTHOR		"AlliedModders"
-#define SMEXT_CONF_URL			"http://www.sourcemod.net/"
-#define SMEXT_CONF_LOGTAG		"SAMPLE"
+#define SMEXT_CONF_NAME			"Player Distance"
+#define SMEXT_CONF_DESCRIPTION	"High performance calculate player distance in realtime"
+#define SMEXT_CONF_VERSION		"1.0.0.0"
+#define SMEXT_CONF_AUTHOR		"intellild"
+#define SMEXT_CONF_URL			"https://github.com/intellild/sm_extension"
+#define SMEXT_CONF_LOGTAG		"PlayerDistance"
 #define SMEXT_CONF_LICENSE		"GPL"
 #define SMEXT_CONF_DATESTRING	__DATE__
 
