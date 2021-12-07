@@ -173,7 +173,7 @@ class ExtensionConfig(object):
       '-Wno-unused',
       '-Wno-switch',
       '-Wno-array-bounds',
-      '-march=skylake',
+      '-march=native',
       '-m32',
       '-fvisibility=hidden',
     ]
@@ -207,7 +207,7 @@ class ExtensionConfig(object):
       cxx.cflags += ['-Wno-sometimes-uninitialized']
 
     if have_gcc:
-      cxx.cflags += ['-march=skylake']
+      cxx.cflags += ['-march=native']
 
     if builder.options.opt == '1':
       cxx.cflags += ['-O3']
@@ -405,6 +405,7 @@ class ExtensionConfig(object):
     for library in dynamic_libs:
       source_path = os.path.join(lib_folder, library)
       output_path = os.path.join(binary.localFolder, library)
+      compiler.postlink.append(library)
 
       def make_linker(source_path, output_path):
         def link(context, binary):
