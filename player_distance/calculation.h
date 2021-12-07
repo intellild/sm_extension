@@ -1,5 +1,7 @@
 #pragma once
 
+#include "public/player_distance.h"
+
 typedef struct point_struct {
     float x;
     float y;
@@ -7,8 +9,6 @@ typedef struct point_struct {
     float __padding;
 } point_t;
 
-void init_calculation();
+void InitCalculation();
 
-void calculate(point_t points[64]);
-
-float get_distance(int client1, int client2);
+void Calculate(point_t points[64]);

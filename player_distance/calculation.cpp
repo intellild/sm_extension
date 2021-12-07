@@ -9,7 +9,7 @@ static inline float square(float value)
     return value * value;
 }
 
-void init_calculation()
+void InitCalculation()
 {
     for (int i = 0; i < 64; i++)
     {
@@ -20,7 +20,7 @@ void init_calculation()
     }
 }
 
-void calculate(point_t points[64])
+void Calculate(point_t points[64])
 {
     for (int i = 0; i < 64; i++)
     {
@@ -35,7 +35,7 @@ void calculate(point_t points[64])
     }
 }
 
-float get_distance(int client1, int client2) {
+float GetDistance(int client1, int client2) {
     assert(client1 > 0 && client1 <= 64);
     assert(client2 > 0 && client2 <= 64);
     return g_Distance[client1][client2];

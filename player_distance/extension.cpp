@@ -49,6 +49,22 @@ SMEXT_LINK(&g_PlayerDistance);
 
 static point_t g_Buffer[64];
 
+cell_t SP_GetDistance(IPluginContext *pContext, const cell_t *params);
+
+const sp_nativeinfo_t Natives[] =
+{
+    {"GetDistance", SP_GetDistance},
+    {NULL, NULL},
+};
+
+cell_t SP_GetDistance(IPluginContext *pContext, const cell_t *params)
+{
+    cell_t client1 = params[1];
+    cell_t client2 = params[2];
+    float distance = GetDistance(client1, client2);
+    return sp_ftoc(distance);
+}
+
 static void GameFrameHook(bool simulating)
 {
     g_PlayerDistance.FrameAction();
@@ -56,7 +72,7 @@ static void GameFrameHook(bool simulating)
 
 bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
 {
-    init_calculation();
+    InitCalculation();
     for (int i = 0; i < 64; i++)
     {
         point_t &point = g_Buffer[i];
@@ -66,6 +82,7 @@ bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
         g_Buffer[i].__padding = 0.0;
     }
     g_pSM->AddGameFrameHook(GameFrameHook);
+    sharesys->AddNatives(myself, Natives);
     return true;
 }
 
@@ -113,7 +130,7 @@ void PlayerDistance::FrameAction()
         player_count++;
         #endif
     }
-    calculate(g_Buffer);
+    Calculate(g_Buffer);
 
     #ifdef __PERF__
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
