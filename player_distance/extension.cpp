@@ -76,6 +76,12 @@ void PlayerDistance::SDK_OnUnload()
 
 void PlayerDistance::FrameAction()
 {
+    #ifdef __PERF__
+    timespec start, end;
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+    int player_count = 0;
+    #endif
+
     for (int i = 0; i < 64; i++)
     {
         point_t &point = g_Buffer[i];
@@ -102,6 +108,16 @@ void PlayerDistance::FrameAction()
         point.x = vec.x;
         point.y = vec.y;
         point.z = vec.z;
+
+        #ifdef __PERF__
+        player_count++;
+        #endif
     }
     calculate(g_Buffer);
+
+    #ifdef __PERF__
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+    long duration = end.tv_nsec - start.tv_nsec;
+    g_pSM->LogMessage(myself, "%d players, %ld ns \n", player_count, duration);
+    #endif
 }
