@@ -1,1 +1,1 @@
-native float GetDistance(int client1, int client2);
+native float PlayerDistance_GetClientDistanceAbsSquare(int client1, int client2);

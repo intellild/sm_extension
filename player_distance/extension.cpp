@@ -48,16 +48,18 @@ PlayerDistance g_PlayerDistance;		/**< Global singleton for extension's main int
 SMEXT_LINK(&g_PlayerDistance);
 
 static point_t g_Buffer[64];
+IdentityToken_t g_RuleIdentityToken;
+HandleType_t g_RuleHandleType;
 
-cell_t SP_GetDistance(IPluginContext *pContext, const cell_t *params);
+cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params);
 
 const sp_nativeinfo_t Natives[] =
 {
-    {"GetDistance", SP_GetDistance},
+    {"PlayerDistance_GetClientDistanceAbsSquare", SP_GetClientDistanceAbsSquare},
     {NULL, NULL},
 };
 
-cell_t SP_GetDistance(IPluginContext *pContext, const cell_t *params)
+cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params)
 {
     cell_t client1 = params[1];
     cell_t client2 = params[2];
@@ -89,6 +91,18 @@ bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
 void PlayerDistance::SDK_OnUnload()
 {
     g_pSM->RemoveGameFrameHook(GameFrameHook);
+}
+
+void PlayerDistance::SDK_OnAllLoaded()
+{
+    HandleAccess hacc;
+    TypeAccess tacc;
+    handlesys->InitAccessDefaults(&tacc, hacc);
+    tacc.access[HTypeAccess_Create] = true;
+    hacc.access[HandleAccess_Read] = HANDLE_RESTRICT_OWNER;
+    HandleType_t extType = sharesys->FindIdentType("EXTENSION");
+    g_RuleIdentityToken = sharesys->CreateIdentity(extType);
+    g_RuleHandleType = handlesys->CreateType("PlayerDistance_Rule", this, 0, &tacc, &hacc, g_RuleIdentityToken, nullptr);
 }
 
 void PlayerDistance::FrameAction()
