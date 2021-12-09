@@ -41,14 +41,16 @@ class SMGlobalClass;
 #include <edict.h>
 #include <iplayerinfo.h>
 #include <mathlib/vector.h>
-#include "calculation.h"
+#include "compute.h"
+#include "RuleManager.h"
 
 PlayerDistance g_PlayerDistance;		/**< Global singleton for extension's main interface */
 
 SMEXT_LINK(&g_PlayerDistance);
 
 static point_t g_Buffer[64];
-IdentityToken_t g_RuleIdentityToken;
+static RuleManager *g_RuleManager = nullptr;
+IdentityToken_t *g_RuleIdentityToken;
 HandleType_t g_RuleHandleType;
 
 cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params);
@@ -74,7 +76,7 @@ static void GameFrameHook(bool simulating)
 
 bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
 {
-    InitCalculation();
+    InitCompute();
     for (int i = 0; i < 64; i++)
     {
         point_t &point = g_Buffer[i];
@@ -91,18 +93,24 @@ bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
 void PlayerDistance::SDK_OnUnload()
 {
     g_pSM->RemoveGameFrameHook(GameFrameHook);
+    if (g_RuleManager != nullptr)
+    {
+        delete g_RuleManager;
+    }
 }
 
 void PlayerDistance::SDK_OnAllLoaded()
 {
+    g_RuleManager = new RuleManager;
+
     HandleAccess hacc;
     TypeAccess tacc;
-    handlesys->InitAccessDefaults(&tacc, hacc);
+    handlesys->InitAccessDefaults(&tacc, &hacc);
     tacc.access[HTypeAccess_Create] = true;
     hacc.access[HandleAccess_Read] = HANDLE_RESTRICT_OWNER;
     HandleType_t extType = sharesys->FindIdentType("EXTENSION");
-    g_RuleIdentityToken = sharesys->CreateIdentity(extType);
-    g_RuleHandleType = handlesys->CreateType("PlayerDistance_Rule", this, 0, &tacc, &hacc, g_RuleIdentityToken, nullptr);
+    g_RuleIdentityToken = sharesys->CreateIdentity(extType, nullptr);
+    g_RuleHandleType = handlesys->CreateType("PlayerDistance_Rule", g_RuleManager, 0, &tacc, &hacc, g_RuleIdentityToken, nullptr);
 }
 
 void PlayerDistance::FrameAction()
@@ -144,7 +152,7 @@ void PlayerDistance::FrameAction()
         player_count++;
         #endif
     }
-    Calculate(g_Buffer);
+    Compute(g_Buffer);
 
     #ifdef __PERF__
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);

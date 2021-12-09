@@ -6,7 +6,9 @@ projectName = 'player_distance'
 # smsdk_ext.cpp will be automatically added later
 sourceFiles = [
   'extension.cpp',
-  'calculation.cpp'
+  'compute.cpp',
+  'RuleManager.cpp',
+  'Rule.cpp'
 ]
 
 ###############

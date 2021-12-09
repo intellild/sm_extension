@@ -29,6 +29,8 @@
  * Version: $Id$
  */
 
+#pragma once
+
 #ifndef _INCLUDE_SOURCEMOD_EXTENSION_PROPER_H_
 #define _INCLUDE_SOURCEMOD_EXTENSION_PROPER_H_
 

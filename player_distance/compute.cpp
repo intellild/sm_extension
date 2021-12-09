@@ -1,6 +1,6 @@
 #include <cmath>
 #include <cassert>
-#include "calculation.h"
+#include "compute.h"
 
 static float g_Distance[64][64];
 
@@ -20,7 +20,7 @@ void InitCalculation()
     }
 }
 
-void Calculate(point_t points[64])
+void Compute(point_t points[64])
 {
     for (int i = 0; i < 64; i++)
     {
