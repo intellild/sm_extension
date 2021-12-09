@@ -44,21 +44,21 @@ class SMGlobalClass;
 #include "compute.h"
 #include "RuleManager.h"
 
-PlayerDistance g_PlayerDistance;		/**< Global singleton for extension's main interface */
+PlayerDistance g_PlayerDistance; /**< Global singleton for extension's main interface */
 
 SMEXT_LINK(&g_PlayerDistance);
 
 static point_t g_Buffer[64];
-static RuleManager *g_RuleManager = nullptr;
+static RuleManager g_RuleManager;
 IdentityToken_t *g_RuleIdentityToken;
 HandleType_t g_RuleHandleType;
 
 cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params);
 
 const sp_nativeinfo_t Natives[] =
-{
-    {"PlayerDistance_GetClientDistanceAbsSquare", SP_GetClientDistanceAbsSquare},
-    {NULL, NULL},
+    {
+        {"PlayerDistance_GetClientDistanceAbsSquare", SP_GetClientDistanceAbsSquare},
+        {NULL, NULL},
 };
 
 cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params)
@@ -93,16 +93,11 @@ bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
 void PlayerDistance::SDK_OnUnload()
 {
     g_pSM->RemoveGameFrameHook(GameFrameHook);
-    if (g_RuleManager != nullptr)
-    {
-        delete g_RuleManager;
-    }
+    sharesys->DestroyIdentity(g_RuleIdentityToken);
 }
 
 void PlayerDistance::SDK_OnAllLoaded()
 {
-    g_RuleManager = new RuleManager;
-
     HandleAccess hacc;
     TypeAccess tacc;
     handlesys->InitAccessDefaults(&tacc, &hacc);
@@ -110,16 +105,23 @@ void PlayerDistance::SDK_OnAllLoaded()
     hacc.access[HandleAccess_Read] = HANDLE_RESTRICT_OWNER;
     HandleType_t extType = sharesys->FindIdentType("EXTENSION");
     g_RuleIdentityToken = sharesys->CreateIdentity(extType, nullptr);
-    g_RuleHandleType = handlesys->CreateType("PlayerDistance_Rule", g_RuleManager, 0, &tacc, &hacc, g_RuleIdentityToken, nullptr);
+    g_RuleHandleType = handlesys->CreateType(
+        "PlayerDistance_Rule",
+        std::addressof(g_RuleManager),
+        0,
+        std::addressof(tacc), 
+        std::addressof(hacc),
+        g_RuleIdentityToken,
+        nullptr);
 }
 
 void PlayerDistance::FrameAction()
 {
-    #ifdef __PERF__
+#ifdef __PERF__
     timespec start, end;
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
     int player_count = 0;
-    #endif
+#endif
 
     for (int i = 0; i < 64; i++)
     {
@@ -148,15 +150,15 @@ void PlayerDistance::FrameAction()
         point.y = vec.y;
         point.z = vec.z;
 
-        #ifdef __PERF__
+#ifdef __PERF__
         player_count++;
-        #endif
+#endif
     }
     Compute(g_Buffer);
 
-    #ifdef __PERF__
+#ifdef __PERF__
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
     long duration = end.tv_nsec - start.tv_nsec;
     g_pSM->LogMessage(myself, "%d players, %ld ns \n", player_count, duration);
-    #endif
+#endif
 }
