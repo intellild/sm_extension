@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/sourcemod/public",
                 "${workspaceFolder}/player_distance",
-                "${workspaceFolder}/player_distance/sdk",
+                // "${workspaceFolder}/player_distance/sdk",
                 "${workspaceFolder}/sourcemod/public",
                 "${workspaceFolder}/sourcemod/public/extensions",
                 "${workspaceFolder}/sourcemod/sourcepawn/include",
@@ -24,7 +24,10 @@
                 "${workspaceFolder}/hl2sdk-csgo/game/shared",
                 "${workspaceFolder}/hl2sdk-csgo/common"
             ],
-            "defines": [],
+            "defines": [
+                "POSIX",
+                "COMPILER_GCC"
+            ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++14",
