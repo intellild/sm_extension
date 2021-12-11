@@ -64,7 +64,7 @@ const sp_nativeinfo_t Natives[] =
     {"PlayerDistance_DisableRule", sp_DisableRule},
     {"PlayerDistance_Setting", sp_Setting},
     {"PlayerDistance_SettingAll", sp_SettingAll},
-    {"PlayerDistance_ResetAllRules", sp_ResetAllRules},
+    {"PlayerDistance_ResetRule", sp_ResetRule},
     {NULL, NULL},
 };
 
