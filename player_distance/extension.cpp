@@ -55,19 +55,6 @@ RuleManager g_RuleManager;
 IdentityToken_t *g_RuleIdentityToken;
 HandleType_t g_RuleHandleType;
 
-const sp_nativeinfo_t Natives[] =
-{
-    {"PlayerDistance_GetClientDistanceAbsSquare", sp_GetClientDistanceAbsSquare},
-    {"PlayerDistance_CreateRule", sp_CreateRule},
-    {"PlayerDistance_MatchRule", sp_MatchRule},
-    {"PlayerDistance_EnableRule", sp_EnableRule},
-    {"PlayerDistance_DisableRule", sp_DisableRule},
-    {"PlayerDistance_Setting", sp_Setting},
-    {"PlayerDistance_SettingAll", sp_SettingAll},
-    {"PlayerDistance_ResetRule", sp_ResetRule},
-    {NULL, NULL},
-};
-
 cell_t PlayerDistance::CreateRule(IPluginContext *pContext, const int32_t client)
 {
     auto pRule = g_RuleManager.CreateRule(client);
@@ -101,7 +88,7 @@ bool PlayerDistance::SDK_OnLoad(char *error, size_t maxlen, bool late)
         g_Buffer[i].__padding = 0.0;
     }
     g_pSM->AddGameFrameHook(GameFrameHook);
-    sharesys->AddNatives(myself, Natives);
+    sharesys->AddNatives(myself, GetBindings());
     return true;
 }
 

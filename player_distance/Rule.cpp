@@ -3,7 +3,7 @@
 #include <cmath>
 
 Rule::Rule(const int32_t owner)
-    : m_owner{owner}, m_enabled{true}, m_match{0}, m_setting{0}
+    : m_owner{owner}, m_enabled{true},  m_setting{0}, m_match{0}
 {
 }
 
@@ -22,8 +22,13 @@ void Rule::Setting(float value)
     float v = square(value);
     for (auto i = 0; i < 64; i++)
     {
-        m_setting[i] = square(v);
+        m_setting[i] = v;
     }
+}
+
+const std::array<float, 64> & Rule::Setting()
+{
+    return m_setting;
 }
 
 void Rule::Enable()
@@ -51,15 +56,20 @@ void Rule::Run(const std::array<float, 64> &distances)
     {
         float setting = m_setting[i];
         float distance = distances[i];
-        if (!std::isnan(distance) && setting < distances[i])
+        if (!std::isnan(distance) && distances[i] < setting)
         {
-            m_setting[i] = true;
+            m_match[i] = true;
         }
         else
         {
-            m_setting[i] = false;
+            m_match[i] = false;
         }
     }
+}
+
+const std::array<int32_t, 64> & Rule::Match() const
+{
+    return m_match;
 }
 
 bool Rule::Match(const int32_t client) const

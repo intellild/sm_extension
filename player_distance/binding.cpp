@@ -1,8 +1,8 @@
-#include "binding.h"
 #include "compute.h"
 #include "extension.h"
 #include "Rule.h"
 #include "RuleManager.h"
+#include "binding.h"
 
 extern IdentityToken_t *g_RuleIdentityToken;
 extern HandleType_t g_RuleHandleType;
@@ -59,6 +59,12 @@ cell_t sp_DisableRule(IPluginContext *pContext, const cell_t *params)
     return 0;
 }
 
+cell_t sp_IsRuleEnabled(IPluginContext *pContext, const cell_t *params)
+{
+    READ_HANDLE;
+    return pRule->IsEnabled();
+}
+
 cell_t sp_Setting(IPluginContext *pContext, const cell_t *params)
 {
     READ_HANDLE;
@@ -81,4 +87,22 @@ cell_t sp_ResetRule(IPluginContext *pContext, const cell_t *params)
     READ_HANDLE;
     pRule->Reset();
     return 0;
+}
+
+sp_nativeinfo_t* GetBindings()
+{
+    static sp_nativeinfo_t Bindings[] =
+    {
+        {"PlayerDistance_GetClientDistanceAbsSquare", sp_GetClientDistanceAbsSquare},
+        {"PlayerDistance_CreateRule", sp_CreateRule},
+        {"PlayerDistance_MatchRule", sp_MatchRule},
+        {"PlayerDistance_EnableRule", sp_EnableRule},
+        {"PlayerDistance_DisableRule", sp_DisableRule},
+        {"PlayerDistance_Setting", sp_Setting},
+        {"PlayerDistance_SettingAll", sp_SettingAll},
+        {"PlayerDistance_ResetRule", sp_ResetRule},
+        {"PlayerDistance_IsRuleEnabled", sp_IsRuleEnabled},
+        {NULL, NULL},
+    };
+    return Bindings;
 }

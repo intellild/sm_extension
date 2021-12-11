@@ -17,10 +17,12 @@ public:
     int32_t Owner() const;
     void Setting(int32_t client, float value);
     void Setting(float value);
+    const std::array<float, 64> & Setting();
     void Enable();
     void Disable();
     bool IsEnabled() const;
     void Run(const std::array<float, 64> &distances);
+    const std::array<int32_t, 64> & Match() const;
     bool Match(const int32_t client) const;
     void Reset();
 };
