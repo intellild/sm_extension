@@ -30,12 +30,11 @@
  */
 
 #include <cmath>
+#include <array>
 
 #ifdef __PERF__
 #include <ctime>
 #endif
-
-class SMGlobalClass;
 
 #include "extension.h"
 #include <edict.h>
@@ -43,31 +42,24 @@ class SMGlobalClass;
 #include <mathlib/vector.h>
 #include "compute.h"
 #include "RuleManager.h"
+#include "binding.h"
 
 PlayerDistance g_PlayerDistance; /**< Global singleton for extension's main interface */
 
 SMEXT_LINK(&g_PlayerDistance);
 
-static point_t g_Buffer[64];
+using std::array;
+
+static array<point_t, 64> g_Buffer;
 static RuleManager g_RuleManager;
 IdentityToken_t *g_RuleIdentityToken;
 HandleType_t g_RuleHandleType;
 
-cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params);
-
 const sp_nativeinfo_t Natives[] =
-    {
+{
         {"PlayerDistance_GetClientDistanceAbsSquare", SP_GetClientDistanceAbsSquare},
         {NULL, NULL},
 };
-
-cell_t SP_GetClientDistanceAbsSquare(IPluginContext *pContext, const cell_t *params)
-{
-    cell_t client1 = params[1];
-    cell_t client2 = params[2];
-    float distance = GetDistance(client1, client2);
-    return sp_ftoc(distance);
-}
 
 static void GameFrameHook(bool simulating)
 {
@@ -109,7 +101,7 @@ void PlayerDistance::SDK_OnAllLoaded()
         "PlayerDistance_Rule",
         std::addressof(g_RuleManager),
         0,
-        std::addressof(tacc), 
+        std::addressof(tacc),
         std::addressof(hacc),
         g_RuleIdentityToken,
         nullptr);
@@ -155,6 +147,7 @@ void PlayerDistance::FrameAction()
 #endif
     }
     Compute(g_Buffer);
+    g_RuleManager.Run(GetAllDistance());
 
 #ifdef __PERF__
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);

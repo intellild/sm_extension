@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <cinttypes>
 
 class Rule
@@ -19,6 +20,6 @@ public:
     void Enable();
     void Disable();
     bool IsEnabled() const;
-    void Run(float distances[64]);
-    bool Match(int32_t client) const;
+    void Run(const std::array<float, 64> &distances);
+    bool Match(const int32_t client) const;
 };

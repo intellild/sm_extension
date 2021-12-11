@@ -1,5 +1,8 @@
 #pragma once
 
+#include <array>
+#include <cinttypes>
+
 typedef struct point_struct {
     float x;
     float y;
@@ -7,8 +10,12 @@ typedef struct point_struct {
     float __padding;
 } point_t;
 
+using distance_matrix_t = std::array<std::array<float, 64>, 64>;
+
 void InitCompute();
 
-void Compute(point_t points[64]);
+void Compute(const std::array<point_t, 64> &points);
 
-float GetDistance(int client1, int client2);
+float GetDistance(int32_t client1, int32_t client2);
+
+const distance_matrix_t & GetAllDistance();

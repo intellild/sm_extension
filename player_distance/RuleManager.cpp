@@ -1,4 +1,5 @@
 #include <algorithm>
+#include "compute.h"
 #include "RuleManager.h"
 
 void RuleManager::OnHandleDestroy(HandleType_t type, void *object)
@@ -12,7 +13,7 @@ void RuleManager::OnHandleDestroy(HandleType_t type, void *object)
     delete rule;
 }
 
-void RuleManager::Run(float distanceMatrix[64][64])
+void RuleManager::Run(const distance_matrix_t &distanceMatrix)
 {
     for (auto rule : m_rules)
     {

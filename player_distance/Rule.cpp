@@ -41,7 +41,7 @@ bool Rule::IsEnabled() const
     return m_enabled;
 }
 
-void Rule::Run(float distances[64])
+void Rule::Run(const std::array<float, 64> &distances)
 {
     if (!m_enabled)
     {
@@ -62,7 +62,7 @@ void Rule::Run(float distances[64])
     }
 }
 
-bool Rule::Match(int32_t client) const
+bool Rule::Match(const int32_t client) const
 {
     if (!m_enabled)
     {
