@@ -8,11 +8,11 @@ class Rule
 private:
     int32_t m_owner;
     bool m_enabled;
-    float m_setting[64];
-    int32_t m_match[64];
+    std::array<float, 64> m_setting;
+    std::array<int32_t, 64> m_match;
 
 public:
-    Rule(int32_t owner);
+    Rule(const int32_t owner);
 
     int32_t Owner() const;
     void Setting(int32_t client, float value);
