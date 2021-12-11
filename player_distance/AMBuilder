@@ -8,7 +8,8 @@ sourceFiles = [
   'extension.cpp',
   'compute.cpp',
   'RuleManager.cpp',
-  'Rule.cpp'
+  'Rule.cpp',
+  'binding.cpp'
 ]
 
 ###############

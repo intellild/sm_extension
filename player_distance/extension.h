@@ -85,6 +85,7 @@ public:
 	//virtual bool QueryRunning(char *error, size_t maxlen);
 
 	void FrameAction();
+	static cell_t CreateRule(IPluginContext *pContext, const int32_t client);
 
 public:
 #if defined SMEXT_CONF_METAMOD

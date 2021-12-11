@@ -2,9 +2,9 @@
 #include "ext_math.h"
 #include <cmath>
 
-Rule::Rule(int32_t owner) : m_owner(owner)
+Rule::Rule(const int32_t owner)
+    : m_owner{owner}, m_enabled{true}, m_match{0}, m_setting{0}
 {
-
 }
 
 int32_t Rule::Owner() const

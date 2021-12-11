@@ -57,9 +57,31 @@ HandleType_t g_RuleHandleType;
 
 const sp_nativeinfo_t Natives[] =
 {
-        {"PlayerDistance_GetClientDistanceAbsSquare", SP_GetClientDistanceAbsSquare},
-        {NULL, NULL},
+    {"PlayerDistance_GetClientDistanceAbsSquare", sp_GetClientDistanceAbsSquare},
+    {"PlayerDistance_CreateRule", sp_CreateRule},
+    {"PlayerDistance_MatchRule", sp_MatchRule},
+    {"PlayerDistance_EnableRule", sp_EnableRule},
+    {"PlayerDistance_DisableRule", sp_DisableRule},
+    {"PlayerDistance_Setting", sp_Setting},
+    {"PlayerDistance_SettingAll", sp_SettingAll},
+    {NULL, NULL},
 };
+
+cell_t PlayerDistance::CreateRule(IPluginContext *pContext, const int32_t client)
+{
+    auto pRule = g_RuleManager.CreateRule(client);
+    if (!pRule)
+    {
+        return 0;
+    }
+
+    return handlesys->CreateHandle(
+        g_RuleHandleType,
+        pRule,
+        pContext->GetIdentity(),
+        g_RuleIdentityToken,
+        nullptr);
+}
 
 static void GameFrameHook(bool simulating)
 {
