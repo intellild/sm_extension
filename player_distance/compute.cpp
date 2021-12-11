@@ -8,7 +8,7 @@ using std::array;
 
 static distance_matrix_t g_Distance;
 
-void InitCalculation()
+void InitCompute()
 {
     for (auto i = 0; i < 64; i++)
     {
