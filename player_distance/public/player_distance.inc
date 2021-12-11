@@ -7,4 +7,4 @@ native void PlayerDistance_EnableRule(Handle rule);
 native void PlayerDistance_DisableRule(Handle rule);
 native void PlayerDistance_Setting(Handle rule, int client, float value);
 native void PlayerDistance_SettingAll(Handle rule, float value);
-native void PlayerDistance_ResetAllRules();
+native void PlayerDistance_ResetRule(Handle rule);

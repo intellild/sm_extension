@@ -76,8 +76,9 @@ cell_t sp_SettingAll(IPluginContext *pContext, const cell_t *params)
     return 0;
 }
 
-cell_t sp_ResetAllRules(IPluginContext *pContext, const cell_t *params)
+cell_t sp_ResetRule(IPluginContext *pContext, const cell_t *params)
 {
-    g_RuleManager.ResetAllRules();
+    READ_HANDLE;
+    pRule->Reset();
     return 0;
 }

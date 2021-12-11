@@ -28,11 +28,3 @@ void RuleManager::Run(const distance_matrix_t &distanceMatrix)
         pRule->Run(distanceMatrix[owner - 1]);
     }
 }
-
-void RuleManager::ResetAllRules()
-{
-    for (auto pRule : m_rules)
-    {
-        pRule->Reset();
-    }
-}
