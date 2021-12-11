@@ -1,13 +1,9 @@
 #include <cmath>
 #include <cassert>
 #include "compute.h"
+#include "ext_math.h"
 
 static float g_Distance[64][64];
-
-static inline float square(float value)
-{
-    return value * value;
-}
 
 void InitCalculation()
 {

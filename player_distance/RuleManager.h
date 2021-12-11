@@ -11,4 +11,6 @@ private:
 
 public:
     virtual void OnHandleDestroy(HandleType_t type, void *object) override;
+
+    void Run(float distanceMatrix[64][64]);
 };

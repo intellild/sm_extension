@@ -11,3 +11,12 @@ void RuleManager::OnHandleDestroy(HandleType_t type, void *object)
     }
     delete rule;
 }
+
+void RuleManager::Run(float distanceMatrix[64][64])
+{
+    for (auto rule : m_rules)
+    {
+        auto owner = rule->Owner();
+        rule->Run(distanceMatrix[owner - 1]);
+    }
+}
