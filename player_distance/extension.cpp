@@ -51,7 +51,7 @@ SMEXT_LINK(&g_PlayerDistance);
 using std::array;
 
 static array<point_t, 64> g_Buffer;
-static RuleManager g_RuleManager;
+RuleManager g_RuleManager;
 IdentityToken_t *g_RuleIdentityToken;
 HandleType_t g_RuleHandleType;
 
@@ -64,6 +64,7 @@ const sp_nativeinfo_t Natives[] =
     {"PlayerDistance_DisableRule", sp_DisableRule},
     {"PlayerDistance_Setting", sp_Setting},
     {"PlayerDistance_SettingAll", sp_SettingAll},
+    {"PlayerDistance_ResetAllRules", sp_ResetAllRules},
     {NULL, NULL},
 };
 

@@ -70,3 +70,11 @@ bool Rule::Match(const int32_t client) const
     }
     return m_match[client - 1];
 }
+
+void Rule::Reset()
+{
+    for (auto i = 0; i < 64; i++)
+    {
+        m_match[i] = false;
+    }
+}

@@ -22,4 +22,5 @@ public:
     bool IsEnabled() const;
     void Run(const std::array<float, 64> &distances);
     bool Match(const int32_t client) const;
+    void Reset();
 };

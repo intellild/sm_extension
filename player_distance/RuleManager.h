@@ -14,4 +14,5 @@ public:
 
     Rule* CreateRule(const int32_t client);
     void Run(const distance_matrix_t & distanceMatrix);
+    void ResetAllRules();
 };

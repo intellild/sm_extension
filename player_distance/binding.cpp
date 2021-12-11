@@ -2,9 +2,11 @@
 #include "compute.h"
 #include "extension.h"
 #include "Rule.h"
+#include "RuleManager.h"
 
 extern IdentityToken_t *g_RuleIdentityToken;
 extern HandleType_t g_RuleHandleType;
+extern RuleManager g_RuleManager;
 
 #define READ_HANDLE \
     Rule *pRule = nullptr;\
@@ -18,7 +20,7 @@ extern HandleType_t g_RuleHandleType;
         herr = handlesys->ReadHandle(hndl, g_RuleHandleType, std::addressof(sec), reinterpret_cast<void **>(std::addressof(pRule)));\
         if (herr != HandleError_None)\
         {\
-            return pContext->ThrowNativeError("Invalid data pack handle %x (error %d).", hndl, herr);\
+            return pContext->ThrowNativeError("Invalid player distance rule handle %x (error %d).", hndl, herr);\
         }\
     } while(0);
 
@@ -71,5 +73,11 @@ cell_t sp_SettingAll(IPluginContext *pContext, const cell_t *params)
     READ_HANDLE;
     const float value = sp_ctof(params[2]);
     pRule->Setting(value);
+    return 0;
+}
+
+cell_t sp_ResetAllRules(IPluginContext *pContext, const cell_t *params)
+{
+    g_RuleManager.ResetAllRules();
     return 0;
 }
