@@ -89,6 +89,20 @@ cell_t sp_ResetRule(IPluginContext *pContext, const cell_t *params)
     return 0;
 }
 
+cell_t sp_SetRuleFlags(IPluginContext *pContext, const cell_t *params)
+{
+    READ_HANDLE;
+    auto flags = static_cast<uint32_t>(params[2]);
+    pRule->Flags(flags);
+    return 0;
+}
+
+cell_t sp_GetRuleFlags(IPluginContext *pContext, const cell_t *params)
+{
+    READ_HANDLE;
+    return static_cast<cell_t>(pRule->Flags());
+}
+
 sp_nativeinfo_t* GetBindings()
 {
     static sp_nativeinfo_t Bindings[] =
@@ -102,6 +116,8 @@ sp_nativeinfo_t* GetBindings()
         {"PlayerDistance_SettingAll", sp_SettingAll},
         {"PlayerDistance_ResetRule", sp_ResetRule},
         {"PlayerDistance_IsRuleEnabled", sp_IsRuleEnabled},
+        {"PlayerDistance_SetRuleFlags", sp_SetRuleFlags},
+        {"PlayerDistance_GetRuleFlags", sp_GetRuleFlags},
         {NULL, NULL},
     };
     return Bindings;
